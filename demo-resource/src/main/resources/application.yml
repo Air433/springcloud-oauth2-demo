@@ -1,0 +1,40 @@
+server:
+  port: 9023
+spring:
+  application:
+    name: resource
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+  client:
+      service-url:
+        defaultZone: http://localhost:6379/eureka/
+security:
+  oauth2:
+#    client:
+#      clientId: demoApp
+#      clientSecret: demoAppSecret
+#      userAuthorizationUri: http://localhost:9015/oauth/authorize
+#      grant-type: authorization_code
+#      scope: read
+#      access-token-uri: http://localhost:9015/oauth/token
+    resource:
+        id: resource
+        token-info-uri: http://localhost:9015/oauth/check_token
+        user-info-uri: http://localhost:9015/user
+        prefer-token-info: true
+
+    client:
+        client-id: admin
+        client-secret: admin
+        access-token-uri: http://localhost:9015/oauth/token
+        grant-type: client_credentials,password,authorization_code
+        scope: all
+        user-authorization-uri: http://localhost:9015/oauth/authorize
+#      jwt:
+#        key-uri: http://localhost:9015/oauth/token_key
+#  basic:
+#    enabled: false

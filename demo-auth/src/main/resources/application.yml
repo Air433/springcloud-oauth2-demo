@@ -1,0 +1,22 @@
+server:
+  port: 9015
+spring:
+  application:
+    name: resource
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/zuul-auth?useUnicode=true&characterEncoding=utf-8
+#    username: root
+#    password: root
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+  client:
+      service-url:
+        defaultZone: http://localhost:6379/eureka/
