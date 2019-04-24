@@ -8,8 +8,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 @SpringBootApplication
 @EnableDiscoveryClient
-//@EnableAuthorizationServer
-//@EnableResourceServer
 public class DemoAuthApplication {
 
   public static void main(String[] args) {

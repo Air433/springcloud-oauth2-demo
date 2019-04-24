@@ -21,6 +21,7 @@
         <module>demo-eureka</module>
         <module>demo-resource</module>
         <module>demo-auth</module>
+        <module>demo-common</module>
     </modules>
 
     <properties>
@@ -33,6 +34,16 @@
 
     <dependencies>
 
+        <!--eureka 客户端-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!--断路器依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

@@ -1,4 +1,4 @@
-package com.example.demoresource.config;
+package com.example.demo.resource.config;
 
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,6 @@ import org.springframework.util.StringUtils;
  */
 @Configuration
 @EnableResourceServer
-
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 

@@ -1,4 +1,4 @@
-package com.example.demoresource;
+package com.example.demo.resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
