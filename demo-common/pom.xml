@@ -18,5 +18,6 @@
 
     <modules>
         <module>demo-common-security</module>
+        <module>demo-common-core</module>
     </modules>
 </project>

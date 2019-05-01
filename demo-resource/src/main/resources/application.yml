@@ -11,7 +11,7 @@ eureka:
     lease-expiration-duration-in-seconds: 10
   client:
       service-url:
-        defaultZone: http://localhost:6379/eureka/
+        defaultZone: http://localhost:6378/eureka/
 security:
   oauth2:
 #    client:

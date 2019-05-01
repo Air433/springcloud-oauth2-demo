@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
+    @Qualifier(value = "airUserDetailsService")
     private UserDetailsService userDetailsService;
 
     @Override
@@ -54,7 +55,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             .authorizedGrantTypes("authorization_code", "client_credentials", "refresh_token",
                 "password", "implicit")
             .scopes("all")
-            .resourceIds("oauth2-resource", "resource")
+            .resourceIds("oauth2-resource", "resource", "demo-user")
             .accessTokenValiditySeconds(1200)
             .refreshTokenValiditySeconds(50000);
     }

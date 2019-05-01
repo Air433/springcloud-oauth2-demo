@@ -1,5 +1,5 @@
 server:
-  port: 6379
+  port: 6378
 spring:
   application:
     name: demo-eureka
