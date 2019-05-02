@@ -1,6 +1,7 @@
 package com.example.demo.common.security.annotation;
 
 import com.example.demo.common.security.component.AirResourceServerAutoConfiguration;
+import com.example.demo.common.security.component.AirSecurityBeanDefinitionRegistrar;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -17,6 +18,6 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@Import({AirResourceServerAutoConfiguration.class})
+@Import({AirResourceServerAutoConfiguration.class, AirSecurityBeanDefinitionRegistrar.class})
 public @interface AirEnableResourceServer {
 }

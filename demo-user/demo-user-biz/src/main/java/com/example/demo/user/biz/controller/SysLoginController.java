@@ -3,6 +3,7 @@ package com.example.demo.user.biz.controller;
 import com.example.demo.common.core.annotation.SysLogNotUser;
 import com.example.demo.common.core.response.AirResult;
 import com.example.demo.common.core.validator.ValidatorUtils;
+import com.example.demo.common.security.component.PermissionService;
 import com.example.demo.user.biz.form.RegiserUserReq;
 import com.example.demo.user.biz.service.SysUserService;
 import com.example.demo.user.biz.service.SysUserTokenService;
@@ -24,6 +25,7 @@ public class SysLoginController extends AbstractController {
     private SysUserService sysUserService;
     @Autowired
     private SysUserTokenService sysUserTokenService;
+
 
 //    @PostMapping("/sys/login")
 //    public AirResult login(@RequestBody SysLoginRequest request){

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
  * @Author oyg
  * @Date 2019/4/20/16:49
  */
-@ComponentScan("com.example.demo.common")
+@ComponentScan("com.example.demo.common.security")
 public class AirResourceServerAutoConfiguration {
 }
