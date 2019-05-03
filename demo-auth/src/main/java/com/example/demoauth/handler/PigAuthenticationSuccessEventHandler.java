@@ -16,7 +16,8 @@
 
 package com.example.demoauth.handler;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -24,9 +25,11 @@ import org.springframework.stereotype.Component;
  * @author lengleng
  * @date 2019/2/1
  */
-@Slf4j
 @Component
 public class PigAuthenticationSuccessEventHandler extends AbstractAuthenticationSuccessEventHandler {
+
+	private static Logger log = LoggerFactory.getLogger(PigAuthenticationSuccessEventHandler.class);
+
 
 	/**
 	 * 处理登录成功方法

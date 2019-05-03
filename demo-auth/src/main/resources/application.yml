@@ -3,6 +3,12 @@ server:
 spring:
   application:
     name: resource
+  datasource:
+    url: jdbc:mysql://localhost:3306/cloud_oauth?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
 #  redis:
 #    host: 127.0.0.1
 #    port: 6378

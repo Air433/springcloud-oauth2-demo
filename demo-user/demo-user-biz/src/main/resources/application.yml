@@ -69,11 +69,11 @@ security:
         prefer-token-info: true
 
     client:
-        client-id: admin
-        client-secret: admin
+        client-id: air_client
+        client-secret: air_client
         access-token-uri: http://localhost:9015/oauth/token
         grant-type: client_credentials,password,authorization_code
-        scope: all
+        scope: server
         user-authorization-uri: http://localhost:9015/oauth/authorize
 #      jwt:
 #        key-uri: http://localhost:9015/oauth/token_key

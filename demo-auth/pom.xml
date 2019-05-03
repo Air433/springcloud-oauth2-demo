@@ -24,12 +24,6 @@
       <artifactId>spring-cloud-starter</artifactId>
     </dependency>
 
-    <!--Lombok-->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -56,22 +50,11 @@
       <scope>true</scope>
     </dependency>
 
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>runtime</scope>
-    </dependency>
-
     <!--<dependency>-->
       <!--<groupId>org.springframework.boot</groupId>-->
       <!--<artifactId>spring-boot-starter-jdbc</artifactId>-->
     <!--</dependency>-->
 
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <optional>true</optional>
-    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -86,12 +69,33 @@
     <dependency>
       <groupId>com.example</groupId>
       <artifactId>demo-common-security</artifactId>
+      <!--<exclusions>-->
+        <!--<exclusion>-->
+          <!--<groupId>com.baomidou</groupId>-->
+          <!--<artifactId>mybatisplus-spring-boot-starter</artifactId>-->
+        <!--</exclusion>-->
+        <!--<exclusion>-->
+          <!--<groupId>com.baomidou</groupId>-->
+          <!--<artifactId>mybatis-plus</artifactId>-->
+        <!--</exclusion>-->
+      <!--</exclusions>-->
     </dependency>
-
 
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+    </dependency>
+
+    <!--数据库-->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+    </dependency>
+
+    <!--JDBC相关-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jdbc</artifactId>
     </dependency>
 
   </dependencies>
