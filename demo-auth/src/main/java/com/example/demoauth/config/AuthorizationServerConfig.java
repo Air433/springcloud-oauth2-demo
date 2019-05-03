@@ -1,6 +1,7 @@
 package com.example.demoauth.config;
 
 import com.example.demo.common.security.component.AirUserAuthenticationConverter;
+import com.example.demo.common.security.component.AirWebResponseExceptionTranslator;
 import com.example.demo.common.security.component.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,7 +56,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .tokenStore(tokenStore())
                 .accessTokenConverter(accessTokenConverter)
                 .userDetailsService(userDetailsService)
-                .authenticationManager(authenticationManager);
+                .authenticationManager(authenticationManager)
+                .exceptionTranslator(new AirWebResponseExceptionTranslator());
     }
 
     @Override
