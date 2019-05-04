@@ -5,6 +5,16 @@
    <img src="https://img.shields.io/badge/Mybatis%20Plus-2.3-blue.svg" alt="Downloads">
  </p>  
  
+ #### 依赖版本 
+ 
+ 依赖 | 版本
+ ---|---
+ Spring Boot |  2.0.8.RELEASE  
+ Spring Cloud | Finchley.SR2   
+ Spring Security OAuth2 | 2.0.1.RELEASE
+ Spring Security | 5.0.11.RELEASE
+ Mybatis Plus | 2.3
+ 
  #### 模块说明
  ```
  demo-oauth-Finchley-02
