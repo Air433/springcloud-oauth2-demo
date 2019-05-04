@@ -31,6 +31,21 @@
  ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/menulist.png)  
  
  
+ #### 通过授权码授权
+ ##### 浏览器输入  
+http://192.168.0.108:9032/oauth/authorize?response_type=code&client_id=air_client&redirect_uri=http://www.baidu.com&grant_type=code  
+ 192.168.0.108为本机ip  
+ ##### 跳转到登陆页面  
+  ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/code-login.png)  
+ ##### 登陆后重定向到前面URL指定的网址 后面code是授权码
+   ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/getcode.png)  
+ ##### 通过授权码获取token  
+   ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/codeGetToken.png)  
+ ##### 最后通过token访问资源
+   ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/codeAccessResource.png)  
+
+ 
+ 
 
  
   
