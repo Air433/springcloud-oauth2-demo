@@ -23,8 +23,6 @@ public class AirUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserClient userClient;
 
-    private static PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     /**
      * 通过 Username 加载用户详情
      * @param username 用户名
@@ -36,10 +34,14 @@ public class AirUserDetailsServiceImpl implements UserDetailsService {
 
         UserInfo userInfo = userClient.getUserInfo(username).getBody();
 
-        if (userInfo!=null){
+        if (userInfo!=null && userInfo.getSysUser()!=null){
             SecurityUser securityUser = getSecurityUser(userInfo);
             return securityUser;
+        }else {
+            throw new UsernameNotFoundException("用户不存在");
         }
+
+
 
 //        if (username.equals("linyuan")) {
 //            String          password        = passwordEncoder.encode("123456");
@@ -57,7 +59,6 @@ public class AirUserDetailsServiceImpl implements UserDetailsService {
 ////                    AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
 ////            return userDetails;
 //        }
-        return null;
     }
 
     private SecurityUser getSecurityUser(UserInfo userInfo) {
