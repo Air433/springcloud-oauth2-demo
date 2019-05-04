@@ -23,6 +23,7 @@
         <module>demo-auth</module>
         <module>demo-common</module>
         <module>demo-user</module>
+        <module>demo-gateway</module>
     </modules>
 
     <properties>
