@@ -15,18 +15,22 @@
       └── demo-user-api -- 用户权限管理系统公共api模块
       └── demo-user-biz -- 用户权限管理系统业务处理模块
 ```
- ####启动顺序
+ #### 启动顺序
  ````
  DemoEurekaApplication
  DemoGatewayApplication
  DemoAuthApplication
  DemoUserBizApplication
  ````
- ####通过密码授权
-
+ #### 通过密码授权
+  ##### 客户端信息
  ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/password-grand-client.png)   
-
+  ##### 账户信息
  ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/password-grand.png)  
+ ##### 通过token访问资源
+ ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/menulist.png)  
+ 
+ 
 
  
   
