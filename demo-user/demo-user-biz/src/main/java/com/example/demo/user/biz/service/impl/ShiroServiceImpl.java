@@ -4,9 +4,7 @@ import com.example.demo.common.core.utils.Constant;
 import com.example.demo.user.api.entity.SysMenu;
 import com.example.demo.user.biz.dao.SysMenuMapper;
 import com.example.demo.user.biz.dao.SysUserMapper;
-import com.example.demo.user.biz.dao.SysUserTokenMapper;
 import com.example.demo.user.api.entity.SysUser;
-import com.example.demo.user.api.entity.SysUserToken;
 import com.example.demo.user.biz.service.ShiroService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -21,9 +19,6 @@ public class ShiroServiceImpl implements ShiroService {
     private SysMenuMapper sysMenuMapper;
     @Resource
     private SysUserMapper sysUserMapper;
-    @Resource
-    private SysUserTokenMapper sysUserTokenMapper;
-
     @Override
     public Set<String> getUserPermissions(long userId) {
 
@@ -48,11 +43,6 @@ public class ShiroServiceImpl implements ShiroService {
         }
 
         return permsSet;
-    }
-
-    @Override
-    public SysUserToken queryByToken(String token) {
-        return sysUserTokenMapper.queryByToken(token);
     }
 
     @Override
