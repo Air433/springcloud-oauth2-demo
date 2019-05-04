@@ -1,2 +1,3 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.example.demo.user.api.feign.impl.UserServiceFallbackImpl
+  com.example.demo.user.api.feign.impl.UserServiceFallbackImpl,\
+  com.example.demo.user.api.feign.factory.UserServiceFallbackFactory

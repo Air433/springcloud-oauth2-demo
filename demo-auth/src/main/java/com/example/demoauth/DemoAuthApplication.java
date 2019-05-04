@@ -1,5 +1,6 @@
 package com.example.demoauth;
 
+import com.example.demo.common.security.annotation.AirEnableFeignClients;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -13,7 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 
 @SpringCloudApplication
 //@EnableFeignClients(basePackages = "com.example.demo.user.api.feign.factory")
-@EnableFeignClients(basePackages = "com.example.demo.user.api.**")
+@AirEnableFeignClients
 @EnableHystrix
 public class DemoAuthApplication {
 

@@ -2,6 +2,8 @@ package com.example.demo.user.api.feign.impl;
 
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.feign.UserClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +14,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserServiceFallbackImpl implements UserClient {
 
+    private static Logger log = LoggerFactory.getLogger(UserServiceFallbackImpl.class);
+
     private Throwable cause;
 
     @Override
     public ResponseEntity<UserInfo> getUserInfo(String username) {
+        log.error("feign 查询用户信息失败:{}", username, cause);
         return null;
     }
 
