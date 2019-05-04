@@ -5,4 +5,28 @@
    <img src="https://img.shields.io/badge/Mybatis%20Plus-2.3-blue.svg" alt="Downloads">
  </p>  
  
+ #### 模块说明
+ ```
+ demo-oauth-Finchley-02
+ ├── demo-auth ── 授权服务器
+ ├── demo-common ── 公共模块
+ ├── demo-gateway -- Spring Cloud Gateway网关
+ └── demo-user -- 通用用户权限管理模块
+      └── demo-user-api -- 用户权限管理系统公共api模块
+      └── demo-user-biz -- 用户权限管理系统业务处理模块
+```
+ ####启动顺序
+ ````
+ DemoEurekaApplication
+ DemoGatewayApplication
+ DemoAuthApplication
+ DemoUserBizApplication
+ ````
+ ####通过密码授权
+
+ ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/password-grand-client.png)   
+
+ ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/password-grand.png)  
+
  
+  
