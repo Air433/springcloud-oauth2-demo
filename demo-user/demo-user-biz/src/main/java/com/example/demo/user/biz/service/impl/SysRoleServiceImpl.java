@@ -40,12 +40,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public PageUtils queryPage(Map<String, Object> params) {
         String roleName = (String) params.get("roleName");
         Long createUserId = (Long) params.get("createUserId");
+        String column = (String) params.get("orderByColumn");
+        Boolean asc = Boolean.valueOf((String)params.get("asc"));
 
         Page<SysRole> page = this.selectPage(
                 new Query<SysRole>(params).getPage(),
                 new EntityWrapper<SysRole>()
                         .like(StringUtils.isNotBlank(roleName), "role_name", roleName)
                         .eq(createUserId != null, "create_user_id", createUserId)
+                        .orderBy(StringUtils.isNotBlank(column), column,asc==null?true:asc)
         );
         return new PageUtils(page);
     }
