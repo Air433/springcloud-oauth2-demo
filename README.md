@@ -32,6 +32,10 @@
  DemoAuthApplication
  DemoUserBizApplication
  ````
+ 
+ #### 预览图 
+  ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/role-manager-page.jpg)  
+ 
  #### 通过密码授权
   ##### 客户端信息
  ![image](https://github.com/Air433/demo-oauth-Finchley-02/blob/master/image/readme/password-grand-client.png)   
