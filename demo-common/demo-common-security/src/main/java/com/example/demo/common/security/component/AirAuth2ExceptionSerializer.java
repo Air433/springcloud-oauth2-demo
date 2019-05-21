@@ -20,7 +20,7 @@ public class AirAuth2ExceptionSerializer extends StdSerializer<AirAuth2Exception
     @Override
     public void serialize(AirAuth2Exception value, JsonGenerator gen, SerializerProvider provider) throws IOException {
         gen.writeStartObject();
-        gen.writeObjectField("code", CommonConstants.FAIL);
+        gen.writeObjectField("status", CommonConstants.FAIL);
         gen.writeStringField("msg", value.getMessage());
         gen.writeStringField("data", value.getErrorCode());
         gen.writeEndObject();

@@ -48,6 +48,12 @@ public class AirWebResponseExceptionTranslator implements WebResponseExceptionTr
             return handleOAuth2Exception(new InvalidException(ase.getMessage(), ase));
         }
 
+        ase =(OAuth2Exception)throwableAnalyzer
+                .getFirstThrowableOfType(OAuth2Exception.class, causeChain);
+        if(ase !=null){
+            return handleOAuth2Exception(new InvalidException(ase.getMessage(), ase));
+        }
+
         ase = (HttpRequestMethodNotSupportedException) throwableAnalyzer
                 .getFirstThrowableOfType(HttpRequestMethodNotSupportedException.class, causeChain);
         if (ase instanceof HttpRequestMethodNotSupportedException) {

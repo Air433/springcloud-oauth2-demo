@@ -1,5 +1,9 @@
 package com.example.demo.common.security.component;
 
+import com.example.demo.common.core.response.AirResult;
+import com.example.demo.common.security.constant.CommonConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -15,7 +19,7 @@ import org.springframework.security.oauth2.provider.token.UserAuthenticationConv
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by ouyanggang on 2018/11/15.
@@ -25,8 +29,14 @@ import java.io.IOException;
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+  private final static Logger log = LoggerFactory.getLogger(ResourceServerConfig.class);
+
   @Autowired
   private RemoteTokenServices remoteTokenServices;
+  @Autowired
+  private ResourceAuthExceptionEntryPoint resourceAuthExceptionEntryPoint;
+  @Autowired
+  private AirAccessDeniedHandler accessDeniedHandler;
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
@@ -51,14 +61,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
       @Override
       public void handleError(ClientHttpResponse response) throws IOException {
-        if (response.getRawStatusCode() != HttpStatus.BAD_REQUEST.value()) {
-          super.handleError(response);
-        }
+        log.error("-------------------------"+String.valueOf(response.getStatusCode().value()));
       }
     });
     remoteTokenServices.setRestTemplate(restTemplate);
     remoteTokenServices.setAccessTokenConverter(accessTokenConverter);
-    resources.tokenServices(remoteTokenServices);
+    resources.authenticationEntryPoint(resourceAuthExceptionEntryPoint)
+            .accessDeniedHandler(accessDeniedHandler)
+            .tokenServices(remoteTokenServices);
   }
 
 }
