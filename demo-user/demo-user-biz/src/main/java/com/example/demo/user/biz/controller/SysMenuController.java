@@ -53,9 +53,9 @@ public class SysMenuController extends AbstractController {
     @GetMapping("/list")
     @PreAuthorize("@ps.hasPermission('sys:menu:list')")
     public List<SysMenu> list() {
-        List<SysMenu> menuList = sysMenuService.selectList(null);
+        List<SysMenu> menuList = sysMenuService.list(null);
         menuList.forEach(x -> {
-            SysMenu parentMenu = sysMenuService.selectById(x.getParentId());
+            SysMenu parentMenu = sysMenuService.getById(x.getParentId());
             if (parentMenu != null) {
                 x.setParentName(parentMenu.getName());
             }
@@ -94,7 +94,7 @@ public class SysMenuController extends AbstractController {
     @GetMapping("/info/{menuId}")
     @PreAuthorize("@ps.hasPermission('sys:menu:info')")
     public AirResult info(@PathVariable("menuId") Long menuId) {
-        SysMenu sysMenu = sysMenuService.selectById(menuId);
+        SysMenu sysMenu = sysMenuService.getById(menuId);
         Map<String, Object> map = new HashMap<>();
         map.put("menu", sysMenu);
         return AirResult.success(map);
@@ -108,7 +108,7 @@ public class SysMenuController extends AbstractController {
         //数据校验
         verifyForm(menu);
 
-        sysMenuService.insert(menu);
+        sysMenuService.save(menu);
 
         return AirResult.success();
     }
@@ -163,7 +163,7 @@ public class SysMenuController extends AbstractController {
         //上级菜单类型
         int parentType = Constant.MenuType.CATALOG.getValue();
         if (menu.getParentId() != 0) {
-            SysMenu parentMenu = sysMenuService.selectById(menu.getParentId());
+            SysMenu parentMenu = sysMenuService.getById(menu.getParentId());
             parentType = parentMenu.getType();
         }
 

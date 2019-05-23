@@ -1,6 +1,6 @@
 package com.example.demo.user.biz.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.MapUtils;
 import com.example.demo.user.biz.dao.SysMenuMapper;
@@ -68,7 +68,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         //删除菜单
         this.delete(menuId);
         //删除关联表
-        return sysRoleMenuService.deleteByMap(new MapUtils().put("menu_id", menuId));
+        return sysRoleMenuService.removeByMap(new MapUtils().put("menu_id", menuId));
     }
 
     private List<SysMenu> getAllMenList(List<Long> menuIdList) {

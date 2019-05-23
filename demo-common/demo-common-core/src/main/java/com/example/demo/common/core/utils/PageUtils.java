@@ -1,6 +1,6 @@
 package com.example.demo.common.core.utils;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,11 +31,11 @@ public class PageUtils implements Serializable {
         this.totalPage = (int)Math.ceil((double)totalCount/pageSize);
     }
 
-    public PageUtils(Page<?> page){
+    public PageUtils(IPage<?> page){
         this.list = page.getRecords();
         this.totalCount = (int)page.getTotal();
-        this.pageSize = page.getSize();
-        this.currPage = page.getCurrent();
+        this.pageSize = (int)page.getSize();
+        this.currPage = (int)page.getCurrent();
         this.totalPage = (int)page.getPages();
     }
 

@@ -58,7 +58,7 @@ public class SysRoleController extends AbstractController {
         if (getUserId() != Constant.SUPER_ADMIN) {
             map.put("createUserId", getUserId());
         }
-        List<SysRole> list = sysRoleService.selectByMap(map);
+        List<SysRole> list = (List<SysRole>)sysRoleService.listByMap(map);
         Map<String, Object> result = new HashMap<>();
         result.put("list", list);
         return AirResult.success(result);
@@ -67,9 +67,8 @@ public class SysRoleController extends AbstractController {
     @GetMapping("/info/{roleId}")
     @PreAuthorize("@ps.hasPermission('sys:role:info')")
     public AirResult info(@PathVariable("roleId") Long roleId) {
-        SysRole role = sysRoleService.selectById(roleId);
+        SysRole role = sysRoleService.getById(roleId);
 
-        SysRole role2 = sysRoleService.selectById(roleId);
         //查询角色对应的菜单
         List<Long> menuIdList = sysRoleMenuService.queryMenuIdList(roleId);
         role.setMenuIdList(menuIdList);

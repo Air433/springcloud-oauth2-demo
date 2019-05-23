@@ -1,8 +1,8 @@
 package com.example.demo.user.biz.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.core.exception.RRException;
 import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.PageUtils;
@@ -43,21 +43,21 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         String column = (String) params.get("orderByColumn");
         Boolean asc = Boolean.valueOf((String)params.get("asc"));
 
-        Page<SysRole> page = this.selectPage(
-                new Query<SysRole>(params).getPage(),
-                new EntityWrapper<SysRole>()
+        IPage<SysRole> page = this.page(
+                new Query<SysRole>().getPage(params),
+                new QueryWrapper<SysRole>()
                         .like(StringUtils.isNotBlank(roleName), "role_name", roleName)
                         .eq(createUserId != null, "create_user_id", createUserId)
-                        .orderBy(StringUtils.isNotBlank(column), column,asc==null?true:asc)
+                        .orderBy(StringUtils.isNotBlank(column),asc==null?true:asc, column)
         );
         return new PageUtils(page);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(SysRole role) {
+    public void add(SysRole role) {
         role.setCreateTime(new Date());
-        this.insert(role);
+        this.save(role);
 
         //检查权限是否越权
         checkPerms(role);
@@ -70,7 +70,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     @Transactional(rollbackFor = Exception.class)
     public void deleteBatch(Long[] roleIds) {
         //删除角色
-        this.deleteBatchIds(Arrays.asList(roleIds));
+        this.removeByIds(Arrays.asList(roleIds));
 
         //删除角色与菜单关联
         sysRoleMenuService.deleteBatch(roleIds);

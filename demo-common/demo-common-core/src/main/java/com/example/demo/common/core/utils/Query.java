@@ -1,6 +1,7 @@
 package com.example.demo.common.core.utils;
 
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.common.core.xss.SQLFilter;
 import org.apache.commons.lang.StringUtils;
 
@@ -13,54 +14,49 @@ import java.util.Map;
  */
 public class Query<T> extends LinkedHashMap<String, Object> {
 
-    private static final long serialVersionUID = 1L;
+    public IPage<T> getPage(Map<String, Object> params) {
+        return this.getPage(params, null, false);
+    }
 
-    private Page<T> page;
+    public IPage<T> getPage(Map<String, Object> params, String defaultOrderField, boolean isAsc) {
+        //分页参数
+        long curPage = 1;
+        long limit = 10;
 
-    private int currPage = 1;
-
-    private int limit = 10;
-
-    public Query(Map<String, Object> params){
-        this.putAll(params);
-
-        if (params.get("page") != null){
-            currPage = Integer.parseInt((String)params.get("page"));
+        if(params.get(Constant.PAGE) != null){
+            curPage = Long.parseLong((String)params.get(Constant.PAGE));
         }
-        if (params.get("limit") != null){
-            limit = Integer.parseInt((String) params.get("limit"));
+        if(params.get(Constant.LIMIT) != null){
+            limit = Long.parseLong((String)params.get(Constant.LIMIT));
         }
 
-        this.put("offset", (currPage -1) * limit);
-        this.put("page", currPage);
-        this.put("limit", limit);
+        //分页对象
+        Page<T> page = new Page<>(curPage, limit);
 
+        //分页参数
+        params.put(Constant.PAGE, page);
 
+        //排序字段
         //防止SQL注入（因为sidx、order是通过拼接SQL实现排序的，会有SQL注入风险）
-        String sidx = SQLFilter.sqlInject((String)params.get("sidx"));
-        String order = SQLFilter.sqlInject((String)params.get("order"));
-        this.put("sidx", sidx);
-        this.put("order", order);
+        String orderField = SQLFilter.sqlInject((String)params.get(Constant.ORDER_FIELD));
+        String order = (String)params.get(Constant.ORDER);
 
-        //mybatis-plus分页
-        this.page = new Page<>(currPage, limit);
-
-        //排序
-        if(StringUtils.isNotBlank(sidx) && StringUtils.isNotBlank(order)){
-            this.page.setOrderByField(sidx);
-            this.page.setAsc("ASC".equalsIgnoreCase(order));
+        //前端字段排序
+        if(StringUtils.isNotEmpty(orderField) && StringUtils.isNotEmpty(order)){
+            if(Constant.ASC.equalsIgnoreCase(order)) {
+                return page.setAsc(orderField);
+            }else {
+                return page.setDesc(orderField);
+            }
         }
-    }
 
-    public Page<T> getPage() {
+        //默认排序
+        if(isAsc) {
+            page.setAsc(defaultOrderField);
+        }else {
+            page.setDesc(defaultOrderField);
+        }
+
         return page;
-    }
-
-    public int getCurrPage() {
-        return currPage;
-    }
-
-    public int getLimit() {
-        return limit;
     }
 }

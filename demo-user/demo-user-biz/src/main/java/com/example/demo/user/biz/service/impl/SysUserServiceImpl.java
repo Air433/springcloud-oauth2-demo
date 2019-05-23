@@ -1,8 +1,8 @@
 package com.example.demo.user.biz.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.common.core.exception.RRException;
 import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.MapUtils;
@@ -63,9 +63,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String username = (String) params.get("username");
         Long createUserId = (Long) params.get("createUserId");
 
-        Page<SysUser> page = this.selectPage(
-                new Query<SysUser>(params).getPage(),
-                new EntityWrapper<SysUser>()
+        IPage<SysUser> page = this.page(
+                new Query<SysUser>().getPage(params),
+                new QueryWrapper<SysUser>()
                         .like(StringUtils.isNotBlank(username), "username", username)
                         .eq(createUserId != null, "create_user_id", createUserId)
         );
@@ -78,7 +78,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = new SysUser();
         sysUser.setPassword(newPassword);
         return this.update(sysUser,
-                new EntityWrapper<SysUser>().eq("user_id", userId).eq("password", password));
+                new QueryWrapper<SysUser>().eq("user_id", userId).eq("password", password));
     }
 
     @Override
@@ -97,7 +97,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Transactional
     @Override
-    public void save(SysUser user) {
+    public void add(SysUser user) {
         user.setCreateTime(new Date());
 
         String salt = RandomStringUtils.randomAlphabetic(20);
@@ -115,7 +115,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         String username = userReq.getUsername();
 
-        List list = this.selectByMap(new MapUtils().put("username", username));
+        List<SysUser> list = (List<SysUser>)this.listByMap(new MapUtils().put("username", username));
 
         if (list != null && list.size() > 0) {
             throw new RRException("用户名已存在");
@@ -130,7 +130,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         List<Long> roleId = new ArrayList<>();
         roleId.add(2l);
         sysUser.setRoleIdList(roleId);
-        this.insert(sysUser);
+        this.save(sysUser);
 
         sysUserRoleService.saveOrUpdate(sysUser.getUserId(), sysUser.getRoleIdList());
     }

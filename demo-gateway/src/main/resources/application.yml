@@ -3,6 +3,17 @@ server:
 spring:
   application:
     name: demo-gateway
+#  cloud:
+#    gateway:
+#      globalcors:
+#        corsConfigurations:
+#          '[/**]':
+#            allowedOrigins: "*"
+#            allowedMethods:
+#            - GET
+#            - POST
+#            - PUT
+#            - DELETE
 eureka:
 #  instance:
 #    prefer-ip-address: true
@@ -12,4 +23,5 @@ eureka:
   client:
       service-url:
         defaultZone: http://localhost:6378/eureka/
+
 

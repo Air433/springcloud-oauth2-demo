@@ -28,21 +28,46 @@ spring:
 
 
 # ====================MybatisPlus====================
-mybatisPlus:
-  globalConfig:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    idType: 3
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    fieldStrategy: 2
-    #驼峰下划线转换
-    dbColumnUnderline: true
-    #刷新mapper 调试神器
-    isRefresh: true
-    #数据库大写下划线转换
-    isCapitalMode: false
-    #逻辑删除配置
-    logicDeleteValue: 0
-    logicNotDeleteValue: 1
+#mybatisPlus:
+#  globalConfig:
+#    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+#    idType: 3
+#    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+#    fieldStrategy: 2
+#    #驼峰下划线转换
+#    dbColumnUnderline: true
+#    #刷新mapper 调试神器
+#    isRefresh: true
+#    #数据库大写下划线转换
+#    isCapitalMode: false
+#    #逻辑删除配置
+#    logicDeleteValue: 0
+#    logicNotDeleteValue: 1
+
+
+#mybatis
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.example.demo.user.api.entity.**
+  global-config:
+    #数据库相关配置
+    db-config:
+      #主键类型  AUTO:"数据库ID自增", INPUT:"用户输入ID", ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
+      id-type: AUTO
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #驼峰下划线转换
+      column-underline: true
+      logic-delete-value: -1
+      logic-not-delete-value: 0
+    banner: false
+  #原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'
 
 eureka:
 #  instance:

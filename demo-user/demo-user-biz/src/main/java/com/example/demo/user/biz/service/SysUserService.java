@@ -1,6 +1,6 @@
 package com.example.demo.user.biz.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysUser;
@@ -30,7 +30,7 @@ public interface SysUserService extends IService<SysUser> {
 
     void update(SysUser user);
 
-    void save(SysUser sysUser);
+    void add(SysUser sysUser);
 
     void save(RegiserUserReq userReq);
 

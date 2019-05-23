@@ -1,6 +1,6 @@
 package com.example.demo.user.biz.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.user.api.entity.SysRole;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 public interface SysRoleService extends IService<SysRole> {
     PageUtils queryPage(Map<String, Object> params);
 
-    void save(SysRole role);
+    void add(SysRole role);
 
     void deleteBatch(Long[] roleIds);
 }

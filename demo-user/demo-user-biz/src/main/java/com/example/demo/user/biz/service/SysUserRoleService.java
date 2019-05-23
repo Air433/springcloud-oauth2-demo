@@ -1,6 +1,6 @@
 package com.example.demo.user.biz.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.user.api.entity.SysUserRole;
 
 import java.util.List;

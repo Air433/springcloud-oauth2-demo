@@ -1,7 +1,8 @@
 package com.example.demo.user.biz.dao;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demo.user.api.entity.SysCaptcha;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
@@ -11,6 +12,7 @@ import com.example.demo.user.api.entity.SysCaptcha;
  * @author oyg
  * @since 2018-07-15
  */
+@Mapper
 public interface SysCaptchaMapper extends BaseMapper<SysCaptcha> {
 
 }

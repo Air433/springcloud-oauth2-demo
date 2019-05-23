@@ -1,6 +1,6 @@
 package com.example.demo.user.biz.service;
 
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.user.api.entity.SysMenu;
 
 import java.util.List;

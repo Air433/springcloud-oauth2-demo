@@ -1,6 +1,6 @@
 package com.example.demo.user.biz.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.user.biz.dao.SysLogMapper;
 import com.example.demo.user.api.entity.SysLog;
 import com.example.demo.user.biz.service.SysLogService;
