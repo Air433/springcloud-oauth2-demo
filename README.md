@@ -13,7 +13,7 @@
  Spring Cloud | Finchley.SR2   
  Spring Security OAuth2 | 2.0.1.RELEASE
  Spring Security | 5.0.11.RELEASE
- Mybatis Plus | 2.3
+ Mybatis Plus | 3.0.7.1
  
  #### 模块说明
  ```
