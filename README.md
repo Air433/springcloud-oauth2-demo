@@ -2,7 +2,7 @@
  <p align="center">
    <img src="https://img.shields.io/badge/Spring%20Cloud-Finchley.SR2-blue.svg" alt="Coverage Status">
    <img src="https://img.shields.io/badge/Spring%20Boot-2.0.8.RELEASE-blue.svg" alt="Downloads">
-   <img src="https://img.shields.io/badge/Mybatis%20Plus-2.3-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Mybatis%20Plus-3.0.7.1-blue.svg" alt="Downloads">
  </p>  
  
  #### 依赖版本 
