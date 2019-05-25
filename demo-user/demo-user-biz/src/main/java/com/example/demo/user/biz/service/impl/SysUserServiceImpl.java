@@ -55,7 +55,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Override
     public List<Long> queryAllMenuId(Long userId) {
-        return null;
+        return baseMapper.queryAllMenuId(userId);
     }
 
     @Override
