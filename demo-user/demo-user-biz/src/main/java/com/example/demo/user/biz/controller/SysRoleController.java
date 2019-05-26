@@ -9,6 +9,7 @@ import com.example.demo.user.api.entity.SysRole;
 import com.example.demo.user.biz.service.SysRoleMenuService;
 import com.example.demo.user.biz.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,7 +86,7 @@ public class SysRoleController extends AbstractController {
         ValidatorUtils.validateEntity(role);
 
         role.setCreateUserId(getUserId());
-        sysRoleService.save(role);
+        sysRoleService.add(role);
 
         return AirResult.success();
     }
@@ -103,5 +104,18 @@ public class SysRoleController extends AbstractController {
     public void li(@RequestParam String username, String password) {
 
         System.err.println(username);
+    }
+
+    @SysLogAn("修改角色")
+    @PostMapping("/update")
+    @PreAuthorize("@ps.hasPermission('sys:role:update')")
+    public AirResult update(RequestEntity<SysRole> entity){
+        SysRole sysRole = entity.getBody();
+        ValidatorUtils.validateEntity(sysRole);
+
+        sysRole.setCreateUserId(getUserId());
+        sysRoleService.updateRole(sysRole);
+
+        return AirResult.ok();
     }
 }

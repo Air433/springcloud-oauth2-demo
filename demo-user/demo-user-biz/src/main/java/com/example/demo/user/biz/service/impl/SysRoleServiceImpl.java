@@ -79,6 +79,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         sysUserRoleService.deleteBatch(roleIds);
     }
 
+    @Override
+    public void updateRole(SysRole sysRole) {
+        this.updateById(sysRole);
+
+        checkPerms(sysRole);
+
+        sysRoleMenuService.saveOrUpdate(sysRole.getRoleId(), sysRole.getMenuIdList());
+    }
+
     private void checkPerms(SysRole role) {
         //如果不是超级管理员，则需要判断角色的权限是否超过自己的权限
         if (role.getCreateUserId() == Constant.SUPER_ADMIN) {

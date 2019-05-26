@@ -16,4 +16,6 @@ public interface SysRoleService extends IService<SysRole> {
     void add(SysRole role);
 
     void deleteBatch(Long[] roleIds);
+
+    void updateRole(SysRole sysRole);
 }

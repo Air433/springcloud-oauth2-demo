@@ -6,6 +6,7 @@ import com.example.demo.user.api.entity.SysRoleMenu;
 import com.example.demo.user.biz.service.SysRoleMenuService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,19 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     public void saveOrUpdate(Long roleId, List<Long> menuIdList) {
         //先删除角色与菜单关系
         deleteBatch(new Long[]{roleId});
+
+        if (menuIdList.size() == 0){
+            return;
+        }
+
+        List<SysRoleMenu> roleMenuList = new ArrayList<>(menuIdList.size());
+        for (Long menuId : menuIdList) {
+            SysRoleMenu sysRoleMenu = new SysRoleMenu();
+            sysRoleMenu.setMenuId(menuId);
+            sysRoleMenu.setRoleId(roleId);
+            roleMenuList.add(sysRoleMenu);
+        }
+        this.saveBatch(roleMenuList);
     }
 
     @Override
