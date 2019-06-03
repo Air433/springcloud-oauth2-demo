@@ -6,6 +6,7 @@ import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.common.core.validator.Assert;
 import com.example.demo.common.core.validator.ValidatorUtils;
+import com.example.demo.common.core.validator.group.AddGroup;
 import com.example.demo.common.core.validator.group.UpdateGroup;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysUser;
@@ -93,14 +94,14 @@ public class SysUserController extends AbstractController {
         return AirResult.success(map);
     }
 
-    @SysLogAn("修改用户")
+    @SysLogAn("保存用户")
     @PostMapping("/save")
     @PreAuthorize("@ps.hasPermission('sys:user:save')")
     public AirResult save(@RequestBody SysUser sysUser) {
-        ValidatorUtils.validateEntity(sysUser, UpdateGroup.class);
+        ValidatorUtils.validateEntity(sysUser, AddGroup.class);
 
         sysUser.setCreateUserId(getUserId());
-        sysUserService.update(sysUser);
+        sysUserService.add(sysUser);
         return AirResult.success();
     }
 

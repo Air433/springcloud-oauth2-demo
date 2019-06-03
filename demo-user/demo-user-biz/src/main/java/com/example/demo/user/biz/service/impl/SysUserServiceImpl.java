@@ -45,7 +45,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     private ShiroService shiroService;
 
-
     private static final PasswordEncoder ENCODER = new BCryptPasswordEncoder();
 
     @Override
@@ -100,12 +99,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public void add(SysUser user) {
         user.setCreateTime(new Date());
 
-        String salt = RandomStringUtils.randomAlphabetic(20);
         user.setPassword(ENCODER.encode(user.getPassword()));
-        user.setSalt(salt);
 
         checkRole(user);
 
+        this.save(user);
+
+        //保存用户与角色关系
+        sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
 
     }
 

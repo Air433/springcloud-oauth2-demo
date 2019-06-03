@@ -37,6 +37,7 @@ public class AirAccessDeniedHandler extends OAuth2AccessDeniedHandler {
         response.setContentType(CommonConstants.CONTENT_TYPE);
         AirResult<String> result = new AirResult<>();
         result.setMsg("授权失败，禁止访问");
+        result.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setStatus(HttpStatus.FORBIDDEN.value());
         PrintWriter printWriter = response.getWriter();
         printWriter.append(objectMapper.writeValueAsString(result));
