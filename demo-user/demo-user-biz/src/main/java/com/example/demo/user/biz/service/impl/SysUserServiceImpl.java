@@ -61,12 +61,15 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public PageUtils queryPage(Map<String, Object> params) {
         String username = (String) params.get("username");
         Long createUserId = (Long) params.get("createUserId");
+        String column = (String) params.get("orderByColumn");
+        Boolean asc = Boolean.valueOf((String)params.get("asc"));
 
         IPage<SysUser> page = this.page(
                 new Query<SysUser>().getPage(params),
                 new QueryWrapper<SysUser>()
                         .like(StringUtils.isNotBlank(username), "username", username)
                         .eq(createUserId != null, "create_user_id", createUserId)
+                        .orderBy(StringUtils.isNotBlank(column),asc==null?true:asc, column)
         );
 
         return new PageUtils(page);

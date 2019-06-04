@@ -112,9 +112,9 @@ public class SysUserController extends AbstractController {
      * @return
      */
     @SysLogAn("删除用户")
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @PreAuthorize("@ps.hasPermission('sys:user:delete')")
-    public AirResult delete(@RequestParam Long[] userIds) {
+    public AirResult delete(@RequestBody Long[] userIds) {
         if (ArrayUtils.contains(userIds, 1L)) {
             return AirResult.error("系统管理员不能删除");
         }

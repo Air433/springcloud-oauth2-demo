@@ -30,7 +30,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/**").access("#oauth2.hasScope('all')");
+//            .antMatchers("/**").access("#oauth2.hasScope('all')");
+            .anyRequest().authenticated();
   }
 
 
