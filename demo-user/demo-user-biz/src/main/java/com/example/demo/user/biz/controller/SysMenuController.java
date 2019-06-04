@@ -127,7 +127,7 @@ public class SysMenuController extends AbstractController {
     }
 
     @SysLogAn("删除菜单")
-    @PostMapping("/delete/{menuId}")
+    @DeleteMapping("/delete/{menuId}")
     @PreAuthorize("@ps.hasPermission('sys:menu:delete')")
     public AirResult delete(@PathVariable("menuId") long menuId) {
         if (menuId <= 3l) {
