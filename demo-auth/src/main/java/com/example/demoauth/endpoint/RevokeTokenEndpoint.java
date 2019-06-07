@@ -26,9 +26,9 @@ public class RevokeTokenEndpoint {
 
     @RequestMapping(value = "/oauth/token", method= RequestMethod.DELETE)
     public @ResponseBody
-    Msg revokeToken(String access_token){
+    Msg revokeToken(String accessToken){
         Msg msg = new Msg();
-        if (consumerTokenServices.revokeToken(access_token)){
+        if (consumerTokenServices.revokeToken(accessToken)){
             msg.setCode(Msg.SUCCESS);
             msg.setMsg("注销成功");
         }else {
@@ -39,7 +39,7 @@ public class RevokeTokenEndpoint {
     }
 
     @DeleteMapping(value = "/oauth/token/remove")
-    public @ResponseBody Msg removeToken(String clientIds[], String usernames[]){
+    public @ResponseBody Msg removeToken(String[] clientIds, String[] usernames){
         Msg msg = new Msg();
         try {
             for (String username : usernames) {

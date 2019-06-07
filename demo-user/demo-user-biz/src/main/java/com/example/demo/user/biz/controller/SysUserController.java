@@ -10,6 +10,7 @@ import com.example.demo.common.core.validator.group.AddGroup;
 import com.example.demo.common.core.validator.group.UpdateGroup;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysUser;
+import com.example.demo.user.api.request.UserQO;
 import com.example.demo.user.biz.form.PasswordForm;
 import com.example.demo.user.biz.service.SysUserRoleService;
 import com.example.demo.user.biz.service.SysUserService;
@@ -45,15 +46,15 @@ public class SysUserController extends AbstractController {
 
     @GetMapping("/list")
     @PreAuthorize("@ps.hasPermission('sys:user:list')")
-    public AirResult list(@RequestParam Map<String, Object> params) {
+    public AirResult list(UserQO userQO) {
         //只有超级管理员可以查询所有管理员列表
+        Long createUserId = null;
         if (getUserId() != Constant.SUPER_ADMIN) {
-            params.put("createdUserId", getUser());
+            createUserId = getUserId();
         }
-        PageUtils page = sysUserService.queryPage(params);
-        Map<String, Object> map = new HashMap<>();
-        map.put("page", page);
-        return AirResult.success(map);
+        PageUtils page = sysUserService.queryPage(userQO, createUserId);
+
+        return AirResult.ok(page);
     }
 
     @GetMapping("/info")

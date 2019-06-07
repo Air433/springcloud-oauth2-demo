@@ -32,6 +32,7 @@ public class AirUserAuthenticationConverter extends DefaultUserAuthenticationCon
      *
      * @param userDetailsService the userDetailsService to set
      */
+    @Override
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
@@ -43,11 +44,13 @@ public class AirUserAuthenticationConverter extends DefaultUserAuthenticationCon
      *
      * @param defaultAuthorities the defaultAuthorities to set. Default null.
      */
+    @Override
     public void setDefaultAuthorities(String[] defaultAuthorities) {
         this.defaultAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(StringUtils
                 .arrayToCommaDelimitedString(defaultAuthorities));
     }
 
+    @Override
     public Map<String, ?> convertUserAuthentication(Authentication authentication) {
         Map<String, Object> response = new LinkedHashMap<String, Object>();
         response.put(USERNAME, authentication.getName());

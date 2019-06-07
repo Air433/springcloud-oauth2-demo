@@ -10,6 +10,7 @@ import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.common.core.utils.Query;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysMenu;
+import com.example.demo.user.api.request.UserQO;
 import com.example.demo.user.biz.dao.SysRoleMapper;
 import com.example.demo.user.biz.dao.SysUserMapper;
 import com.example.demo.user.api.entity.SysUser;
@@ -58,18 +59,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        String username = (String) params.get("username");
-        Long createUserId = (Long) params.get("createUserId");
-        String column = (String) params.get("orderByColumn");
-        Boolean asc = Boolean.valueOf((String)params.get("asc"));
+    public PageUtils queryPage(UserQO userQO, Long createUserId) {
 
         IPage<SysUser> page = this.page(
-                new Query<SysUser>().getPage(params),
+                new Query<SysUser>().getPage(userQO),
                 new QueryWrapper<SysUser>()
-                        .like(StringUtils.isNotBlank(username), "username", username)
+                        .like(StringUtils.isNotBlank(userQO.getUsername()), "username", userQO.getUsername())
                         .eq(createUserId != null, "create_user_id", createUserId)
-                        .orderBy(StringUtils.isNotBlank(column),asc==null?true:asc, column)
         );
 
         return new PageUtils(page);
@@ -84,7 +80,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void update(SysUser user) {
         if (StringUtils.isBlank(user.getPassword())) {
             user.setPassword(null);
@@ -97,7 +93,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     }
 
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void add(SysUser user) {
         user.setCreateTime(new Date());
@@ -132,7 +128,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         sysUser.setSalt(salt);
 
         List<Long> roleId = new ArrayList<>();
-        roleId.add(2l);
+        roleId.add(2L);
         sysUser.setRoleIdList(roleId);
         this.save(sysUser);
 

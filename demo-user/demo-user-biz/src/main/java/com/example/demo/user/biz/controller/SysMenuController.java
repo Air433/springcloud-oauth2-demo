@@ -80,9 +80,9 @@ public class SysMenuController extends AbstractController {
         root.setOpen(true);
         menuList.add(root);
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("menuList", menuList);
-        return AirResult.success(map);
+//        Map<String, Object> map = new HashMap<>();
+//        map.put("menuList", menuList);
+        return AirResult.ok(menuList);
     }
 
     /**
@@ -130,7 +130,7 @@ public class SysMenuController extends AbstractController {
     @DeleteMapping("/delete/{menuId}")
     @PreAuthorize("@ps.hasPermission('sys:menu:delete')")
     public AirResult delete(@PathVariable("menuId") long menuId) {
-        if (menuId <= 3l) {
+        if (menuId <= 3L) {
             return AirResult.error("系统菜单，不能删除");
         }
 

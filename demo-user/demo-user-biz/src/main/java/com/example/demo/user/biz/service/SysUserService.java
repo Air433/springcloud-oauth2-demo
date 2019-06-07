@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysUser;
+import com.example.demo.user.api.request.UserQO;
 import com.example.demo.user.biz.form.RegiserUserReq;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface SysUserService extends IService<SysUser> {
      */
     List<Long> queryAllMenuId(Long userId);
 
-    PageUtils queryPage(Map<String, Object> params);
+    PageUtils queryPage(UserQO userQO, Long createUserId);
 
     boolean updatePassword(Long userId, String password, String newPassword);
 

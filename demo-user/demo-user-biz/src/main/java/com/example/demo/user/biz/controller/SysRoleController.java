@@ -6,6 +6,7 @@ import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.common.core.validator.ValidatorUtils;
 import com.example.demo.user.api.entity.SysRole;
+import com.example.demo.user.api.request.RoleQO;
 import com.example.demo.user.biz.service.SysRoleMenuService;
 import com.example.demo.user.biz.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +34,16 @@ public class SysRoleController extends AbstractController {
 
     @GetMapping("/list")
     @PreAuthorize("@ps.hasPermission('sys:role:list')")
-    public AirResult list(@RequestParam Map<String, Object> params) {
+    public AirResult list(RoleQO roleQO) {
         //如果不是超级管理员，则只查询自己创建的角色列表
+        Long createUserId = null;
         if (getUserId() != Constant.SUPER_ADMIN) {
-            params.put("createUserId", getUserId());
+            createUserId = getUserId();
         }
 
-        PageUtils page = sysRoleService.queryPage(params);
-        Map<String, Object> map = new HashMap<>();
-        map.put("page", page);
-        return AirResult.success(map);
+        PageUtils page = sysRoleService.queryPage(roleQO, createUserId);
+
+        return AirResult.ok(page);
 
     }
 
@@ -92,7 +93,7 @@ public class SysRoleController extends AbstractController {
     }
 
     @SysLogAn("删除角色")
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     @PreAuthorize("@ps.hasPermission('sys:role:delete')")
     public AirResult delete(@RequestBody Long[] roleIds) {
         sysRoleService.deleteBatch(roleIds);
@@ -107,7 +108,7 @@ public class SysRoleController extends AbstractController {
     }
 
     @SysLogAn("修改角色")
-    @PostMapping("/update")
+    @PutMapping("/update")
     @PreAuthorize("@ps.hasPermission('sys:role:update')")
     public AirResult update(RequestEntity<SysRole> entity){
         SysRole sysRole = entity.getBody();

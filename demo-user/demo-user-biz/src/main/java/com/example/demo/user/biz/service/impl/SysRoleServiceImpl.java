@@ -7,6 +7,7 @@ import com.example.demo.common.core.exception.RRException;
 import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.common.core.utils.Query;
+import com.example.demo.user.api.request.RoleQO;
 import com.example.demo.user.biz.dao.SysRoleMapper;
 import com.example.demo.user.api.entity.SysRole;
 import com.example.demo.user.biz.service.SysRoleMenuService;
@@ -20,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author oyg
@@ -37,18 +37,17 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     private SysUserRoleService sysUserRoleService;
 
     @Override
-    public PageUtils queryPage(Map<String, Object> params) {
-        String roleName = (String) params.get("roleName");
-        Long createUserId = (Long) params.get("createUserId");
-        String column = (String) params.get("orderByColumn");
-        Boolean asc = Boolean.valueOf((String)params.get("asc"));
+    public PageUtils queryPage(RoleQO roleQO, Long createUserId) {
+//        String roleName = (String) params.get("roleName");
+//        String column = (String) params.get("orderByColumn");
+//        Boolean asc = Boolean.valueOf((String)params.get("asc"));
 
         IPage<SysRole> page = this.page(
-                new Query<SysRole>().getPage(params),
+                new Query<SysRole>().getPage(roleQO),
                 new QueryWrapper<SysRole>()
-                        .like(StringUtils.isNotBlank(roleName), "role_name", roleName)
+                        .like(StringUtils.isNotBlank(roleQO.getRoleName()), "role_name", roleQO.getRoleName())
                         .eq(createUserId != null, "create_user_id", createUserId)
-                        .orderBy(StringUtils.isNotBlank(column),asc==null?true:asc, column)
+                        //.orderBy(StringUtils.isNotBlank(column),asc==null?true:asc, column)
         );
         return new PageUtils(page);
     }
