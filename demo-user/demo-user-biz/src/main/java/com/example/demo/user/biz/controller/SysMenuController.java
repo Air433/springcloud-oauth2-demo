@@ -80,8 +80,6 @@ public class SysMenuController extends AbstractController {
         root.setOpen(true);
         menuList.add(root);
 
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("menuList", menuList);
         return AirResult.ok(menuList);
     }
 
@@ -114,7 +112,7 @@ public class SysMenuController extends AbstractController {
     }
 
     @SysLogAn("修改菜单")
-    @PostMapping("/update")
+    @PutMapping("/update")
     @PreAuthorize("@ps.hasPermission('sys:menu:update')")
     public AirResult update(@RequestBody SysMenu menu) {
 
