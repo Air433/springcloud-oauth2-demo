@@ -2,7 +2,8 @@
 SQLyog 企业版 - MySQL GUI v8.14 
 MySQL - 5.7.22-log : Database - mydb_02
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -148,12 +149,13 @@ CREATE TABLE `sys_user` (
   `user_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `password` varchar(100) DEFAULT NULL COMMENT '密码',
-  `salt` varchar(20) DEFAULT NULL COMMENT '盐',
   `email` varchar(100) DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(100) DEFAULT NULL COMMENT '手机号',
   `status` tinyint(4) DEFAULT NULL COMMENT '状态  0：禁用   1：正常',
   `create_user_id` bigint(20) DEFAULT NULL COMMENT '创建者ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_user_id` bigint(20) DEFAULT NULL COMMENT '更新者ID',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='系统用户';

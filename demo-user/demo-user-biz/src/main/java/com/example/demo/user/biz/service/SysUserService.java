@@ -5,6 +5,7 @@ import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysUser;
 import com.example.demo.user.api.request.UserQO;
+import com.example.demo.user.api.request.UserUpdateDTO;
 import com.example.demo.user.biz.form.RegiserUserReq;
 
 import java.util.List;
@@ -38,4 +39,8 @@ public interface SysUserService extends IService<SysUser> {
     void testRedis() throws Exception;
 
     UserInfo getUserInfoBy(String username);
+
+    void updateUser(UserUpdateDTO userUpdateDTO);
+
+    SysUser getUserInfoById(Long userId);
 }

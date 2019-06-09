@@ -14,6 +14,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,30 +55,27 @@ public class SysRoleController extends AbstractController {
      */
     @GetMapping("/select")
     @PreAuthorize("@ps.hasPermission('sys:role:list')")
-    public AirResult select() {
+    public AirResult<List<SysRole>> select() {
         Map<String, Object> map = new HashMap<>();
 
         if (getUserId() != Constant.SUPER_ADMIN) {
             map.put("createUserId", getUserId());
         }
-        List<SysRole> list = (List<SysRole>)sysRoleService.listByMap(map);
-        Map<String, Object> result = new HashMap<>();
-        result.put("list", list);
-        return AirResult.success(result);
+        Collection<SysRole> list = sysRoleService.listByMap(map);
+
+        return AirResult.ok(list);
     }
 
     @GetMapping("/info/{roleId}")
     @PreAuthorize("@ps.hasPermission('sys:role:info')")
-    public AirResult info(@PathVariable("roleId") Long roleId) {
+    public AirResult<SysRole> info(@PathVariable("roleId") Long roleId) {
         SysRole role = sysRoleService.getById(roleId);
 
         //查询角色对应的菜单
         List<Long> menuIdList = sysRoleMenuService.queryMenuIdList(roleId);
         role.setMenuIdList(menuIdList);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put("role", role);
-        return AirResult.success(result);
+        return AirResult.ok(role);
     }
 
     @SysLogAn("保存角色")

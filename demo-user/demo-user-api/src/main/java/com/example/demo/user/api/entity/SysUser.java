@@ -40,10 +40,6 @@ public class SysUser extends Model<SysUser> {
     @NotBlank(message = "密码不能为空", groups = AddGroup.class)
     private String password;
     /**
-     * 盐
-     */
-    private String salt;
-    /**
      * 邮箱
      */
     @NotBlank(message = "邮箱不能为空", groups = {AddGroup.class, UpdateGroup.class})
@@ -69,10 +65,37 @@ public class SysUser extends Model<SysUser> {
     private Date createTime;
 
     /**
+     * 更新者ID
+     */
+    @TableField("update_user_id")
+    private Long updateUserId;
+    /**
+     * 更新时间
+     */
+    @TableField("update_time")
+    private Date updateTime;
+
+    /**
      * 角色ID列表
      */
     @TableField(exist = false)
     private List<Long> roleIdList;
+
+    public Long getUpdateUserId() {
+        return updateUserId;
+    }
+
+    public void setUpdateUserId(Long updateUserId) {
+        this.updateUserId = updateUserId;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public List<Long> getRoleIdList() {
         return roleIdList;
@@ -104,14 +127,6 @@ public class SysUser extends Model<SysUser> {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
     }
 
     public String getEmail() {
@@ -165,7 +180,6 @@ public class SysUser extends Model<SysUser> {
                 "userId=" + userId +
                 ", username=" + username +
                 ", password=" + password +
-                ", salt=" + salt +
                 ", email=" + email +
                 ", mobile=" + mobile +
                 ", status=" + status +

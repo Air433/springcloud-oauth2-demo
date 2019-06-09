@@ -11,12 +11,14 @@ import com.example.demo.common.core.validator.group.UpdateGroup;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysUser;
 import com.example.demo.user.api.request.UserQO;
+import com.example.demo.user.api.request.UserUpdateDTO;
 import com.example.demo.user.biz.form.PasswordForm;
 import com.example.demo.user.biz.service.SysUserRoleService;
 import com.example.demo.user.biz.service.SysUserService;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,10 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author oyg
@@ -59,9 +58,8 @@ public class SysUserController extends AbstractController {
 
     @GetMapping("/info")
     public AirResult info() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("user", getUser());
-        return AirResult.success(map);
+        SysUser user = sysUserService.getUserInfoById(getUserId());
+        return AirResult.ok(user);
     }
 
     @SysLogAn("修改密码")
@@ -84,15 +82,11 @@ public class SysUserController extends AbstractController {
 
     @GetMapping("/info/{userId}")
     @PreAuthorize("@ps.hasPermission('sys:user:info')")
-    public AirResult info(@PathVariable("userId") Long userId) {
-        SysUser user = sysUserService.getById(userId);
+    public AirResult<SysUser> info(@PathVariable("userId") Long userId) {
 
-        List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
-        user.setRoleIdList(roleIdList);
+        SysUser user = sysUserService.getUserInfoById(userId);
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("user", user);
-        return AirResult.success(map);
+        return AirResult.ok(user);
     }
 
     @SysLogAn("保存用户")
@@ -136,5 +130,20 @@ public class SysUserController extends AbstractController {
 
         return new ResponseEntity<>(userInfo,HttpStatus.OK);
 
+    }
+
+    @SysLogAn("更新用户")
+    @PutMapping("/update")
+    public AirResult update(RequestEntity<UserUpdateDTO> requestEntity) {
+
+        UserUpdateDTO userUpdateDTO = requestEntity.getBody();
+
+        ValidatorUtils.validateEntity(userUpdateDTO, UpdateGroup.class);
+
+        userUpdateDTO.setUpdateUserId(getUserId());
+        userUpdateDTO.setUpdateTime(new Date());
+
+        sysUserService.updateUser(userUpdateDTO);
+        return AirResult.success();
     }
 }

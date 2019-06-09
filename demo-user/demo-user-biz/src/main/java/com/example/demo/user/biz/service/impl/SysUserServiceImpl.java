@@ -11,6 +11,7 @@ import com.example.demo.common.core.utils.Query;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysMenu;
 import com.example.demo.user.api.request.UserQO;
+import com.example.demo.user.api.request.UserUpdateDTO;
 import com.example.demo.user.biz.dao.SysRoleMapper;
 import com.example.demo.user.biz.dao.SysUserMapper;
 import com.example.demo.user.api.entity.SysUser;
@@ -21,6 +22,7 @@ import com.example.demo.user.biz.service.SysUserRoleService;
 import com.example.demo.user.biz.service.SysUserService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -123,9 +125,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         SysUser sysUser = new SysUser();
         sysUser.setUsername(username);
-        String salt = RandomStringUtils.randomAlphabetic(20);
         sysUser.setPassword(ENCODER.encode(userReq.getPassword()));
-        sysUser.setSalt(salt);
 
         List<Long> roleId = new ArrayList<>();
         roleId.add(2L);
@@ -166,6 +166,29 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         userInfo.setPermissions(permissions.toArray(new String[]{}));
 
         return userInfo;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateUser(UserUpdateDTO userUpdateDTO) {
+
+        SysUser sysUser = new SysUser();
+
+        BeanUtils.copyProperties(userUpdateDTO, sysUser);
+
+        this.updateById(sysUser);
+
+        //保存用户与角色关系
+        sysUserRoleService.saveOrUpdate(sysUser.getUserId(), sysUser.getRoleIdList());
+    }
+
+    @Override
+    public SysUser getUserInfoById(Long userId) {
+        SysUser user = this.getById(userId);
+
+        List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
+        user.setRoleIdList(roleIdList);
+        return user;
     }
 
     private void checkRole(SysUser user) {
