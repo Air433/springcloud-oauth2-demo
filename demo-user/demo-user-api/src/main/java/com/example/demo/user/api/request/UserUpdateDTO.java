@@ -7,6 +7,7 @@ import com.example.demo.common.core.validator.group.UpdateGroup;
 import com.example.demo.user.api.entity.SysUser;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class UserUpdateDTO {
 
-    @NotBlank(message = "用户ID不能为空", groups = {UpdateGroup.class})
+    @NotNull(message = "用户ID不能为空", groups = {UpdateGroup.class})
     private Long userId;
 
     private String email;
