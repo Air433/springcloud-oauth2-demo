@@ -98,6 +98,13 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void add(SysUser user) {
+
+        SysUser sysUser = this.getOne(new QueryWrapper<SysUser>().eq("username", user.getUsername()));
+
+        if (sysUser!=null){
+            throw new RRException("用户名已经存在", 331);
+        }
+
         user.setCreateTime(new Date());
 
         user.setPassword(ENCODER.encode(user.getPassword()));

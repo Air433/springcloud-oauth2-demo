@@ -1,5 +1,6 @@
 package com.example.demo.user.biz.controller;
 
+import com.example.demo.common.core.exception.RRException;
 import com.example.demo.common.core.response.AirResult;
 import com.example.demo.common.security.service.SecurityUser;
 import com.example.demo.user.api.entity.SysUser;
@@ -31,6 +32,10 @@ public abstract class AbstractController {
 
     @ExceptionHandler
     public AirResult exp(HttpServletRequest request, Exception ex){
+
+        if (ex instanceof RRException){
+            return AirResult.build(((RRException) ex).getCode(), ((RRException) ex).getMsg());
+        }
 
         return AirResult.error(ex.getMessage());
     }
