@@ -33,4 +33,6 @@ public interface SysMenuService extends IService<SysMenu> {
     List<SysMenu> queryNotButtonList();
 
     boolean delete(Long menuId);
+
+    void singThreadTest();
 }

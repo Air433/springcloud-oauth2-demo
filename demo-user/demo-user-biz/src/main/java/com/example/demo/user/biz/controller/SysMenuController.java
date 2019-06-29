@@ -182,4 +182,10 @@ public class SysMenuController extends AbstractController {
             return;
         }
     }
+
+    @GetMapping("/sing-thread/test")
+    public AirResult singThreadTest(){
+        sysMenuService.singThreadTest();
+        return AirResult.ok();
+    }
 }

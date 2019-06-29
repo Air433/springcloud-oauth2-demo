@@ -10,6 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * @Author oyg
@@ -36,6 +38,10 @@ public abstract class AbstractController {
         if (ex instanceof RRException){
             return AirResult.build(((RRException) ex).getCode(), ((RRException) ex).getMsg());
         }
+
+        StringWriter sw = new StringWriter();
+        ex.printStackTrace(new PrintWriter(sw, true));
+        logger.error(sw.toString());
 
         return AirResult.error(ex.getMessage());
     }
