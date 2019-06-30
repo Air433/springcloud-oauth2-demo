@@ -10,6 +10,7 @@ import com.example.demo.common.core.validator.group.AddGroup;
 import com.example.demo.common.core.validator.group.UpdateGroup;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysUser;
+import com.example.demo.user.api.request.UserAddDTO;
 import com.example.demo.user.api.request.UserQO;
 import com.example.demo.user.api.request.UserUpdateDTO;
 import com.example.demo.user.biz.form.PasswordForm;
@@ -92,11 +93,12 @@ public class SysUserController extends AbstractController {
     @SysLogAn("保存用户")
     @PostMapping("/save")
     @PreAuthorize("@ps.hasPermission('sys:user:save')")
-    public AirResult save(@RequestBody SysUser sysUser) {
-        ValidatorUtils.validateEntity(sysUser, AddGroup.class);
+    public AirResult save(RequestEntity<UserAddDTO> requestEntity) {
+        UserAddDTO userAddDTO = requestEntity.getBody();
+        ValidatorUtils.validateEntity(userAddDTO, AddGroup.class);
 
-        sysUser.setCreateUserId(getUserId());
-        sysUserService.add(sysUser);
+//        sysUser.setCreateUserId(getUserId());
+        sysUserService.add(userAddDTO, getUserId());
         return AirResult.success();
     }
 

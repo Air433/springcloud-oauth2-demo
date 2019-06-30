@@ -6,7 +6,9 @@ import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.common.core.validator.ValidatorUtils;
 import com.example.demo.user.api.entity.SysRole;
+import com.example.demo.user.api.request.RoleAddDTO;
 import com.example.demo.user.api.request.RoleQO;
+import com.example.demo.user.api.request.RoleUpdateDTO;
 import com.example.demo.user.biz.service.SysRoleMenuService;
 import com.example.demo.user.biz.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,11 +83,11 @@ public class SysRoleController extends AbstractController {
     @SysLogAn("保存角色")
     @PostMapping("/save")
     @PreAuthorize("@ps.hasPermission('sys:role:save')")
-    public AirResult save(@RequestBody SysRole role) {
-        ValidatorUtils.validateEntity(role);
+    public AirResult save(RequestEntity<RoleAddDTO> requestEntity) {
+        RoleAddDTO roleAddDTO = requestEntity.getBody();
+        ValidatorUtils.validateEntity(roleAddDTO);
 
-        role.setCreateUserId(getUserId());
-        sysRoleService.add(role);
+        sysRoleService.add(roleAddDTO, getUserId());
 
         return AirResult.success();
     }
@@ -108,11 +110,10 @@ public class SysRoleController extends AbstractController {
     @SysLogAn("修改角色")
     @PutMapping("/update")
     @PreAuthorize("@ps.hasPermission('sys:role:update')")
-    public AirResult update(RequestEntity<SysRole> entity){
-        SysRole sysRole = entity.getBody();
+    public AirResult update(RequestEntity<RoleUpdateDTO> entity){
+        RoleUpdateDTO sysRole = entity.getBody();
         ValidatorUtils.validateEntity(sysRole);
 
-        sysRole.setCreateUserId(getUserId());
         sysRoleService.updateRole(sysRole);
 
         return AirResult.ok();

@@ -3,6 +3,7 @@ package com.example.demo.user.biz.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.demo.common.core.enums.StatusEnum;
 import com.example.demo.common.core.exception.RRException;
 import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.MapUtils;
@@ -10,6 +11,7 @@ import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.common.core.utils.Query;
 import com.example.demo.user.api.dto.UserInfo;
 import com.example.demo.user.api.entity.SysMenu;
+import com.example.demo.user.api.request.UserAddDTO;
 import com.example.demo.user.api.request.UserQO;
 import com.example.demo.user.api.request.UserUpdateDTO;
 import com.example.demo.user.biz.dao.SysRoleMapper;
@@ -102,7 +104,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser = this.getOne(new QueryWrapper<SysUser>().eq("username", user.getUsername()));
 
         if (sysUser!=null){
-            throw new RRException("用户名已经存在", 331);
+            throw new RRException(StatusEnum.USERNAME_EXIST);
         }
 
         user.setCreateTime(new Date());
@@ -115,6 +117,19 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
         //保存用户与角色关系
         sysUserRoleService.saveOrUpdate(user.getUserId(), user.getRoleIdList());
+
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void add(UserAddDTO userAddDTO, Long createUserId) {
+
+        SysUser sysUser = new SysUser();
+
+        BeanUtils.copyProperties(userAddDTO, sysUser);
+        sysUser.setCreateUserId(createUserId);
+
+        add(sysUser);
 
     }
 

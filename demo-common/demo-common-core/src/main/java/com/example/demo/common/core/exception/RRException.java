@@ -1,5 +1,9 @@
 package com.example.demo.common.core.exception;
 
+import com.example.demo.common.core.enums.StatusEnum;
+
+import java.nio.channels.ReadPendingException;
+
 /**
  * 自定义异常
  * 
@@ -12,7 +16,11 @@ public class RRException extends RuntimeException {
 	
     private String msg;
     private int code = 500;
-    
+
+    public RRException(StatusEnum statusEnum){
+    	this(statusEnum.getDescribe(), statusEnum.getStatus());
+	}
+
     public RRException(String msg) {
 		super(msg);
 		this.msg = msg;

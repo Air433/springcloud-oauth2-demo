@@ -7,7 +7,9 @@ import com.example.demo.common.core.exception.RRException;
 import com.example.demo.common.core.utils.Constant;
 import com.example.demo.common.core.utils.PageUtils;
 import com.example.demo.common.core.utils.Query;
+import com.example.demo.user.api.request.RoleAddDTO;
 import com.example.demo.user.api.request.RoleQO;
+import com.example.demo.user.api.request.RoleUpdateDTO;
 import com.example.demo.user.biz.dao.SysRoleMapper;
 import com.example.demo.user.api.entity.SysRole;
 import com.example.demo.user.biz.service.SysRoleMenuService;
@@ -15,6 +17,7 @@ import com.example.demo.user.biz.service.SysRoleService;
 import com.example.demo.user.biz.service.SysUserRoleService;
 import com.example.demo.user.biz.service.SysUserService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,6 +68,18 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void add(RoleAddDTO roleAddDTO, Long createUserId) {
+
+        SysRole sysRole = new SysRole();
+        BeanUtils.copyProperties(roleAddDTO, sysRole);
+
+        sysRole.setCreateUserId(createUserId);
+
+        add(sysRole);
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void deleteBatch(Long[] roleIds) {
@@ -78,6 +93,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         sysUserRoleService.deleteBatch(roleIds);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateRole(SysRole sysRole) {
         this.updateById(sysRole);
@@ -85,6 +101,15 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         checkPerms(sysRole);
 
         sysRoleMenuService.saveOrUpdate(sysRole.getRoleId(), sysRole.getMenuIdList());
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updateRole(RoleUpdateDTO roleUpdateDTO) {
+        SysRole sysRole = new SysRole();
+        BeanUtils.copyProperties(roleUpdateDTO, sysRole);
+
+        updateRole(sysRole);
     }
 
     private void checkPerms(SysRole role) {

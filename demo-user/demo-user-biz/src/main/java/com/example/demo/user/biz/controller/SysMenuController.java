@@ -5,10 +5,15 @@ import com.example.demo.common.core.exception.RRException;
 import com.example.demo.common.core.response.AirResult;
 import com.example.demo.common.core.utils.Constant;
 import com.example.demo.user.api.entity.SysMenu;
+import com.example.demo.user.api.request.MenuAddDTO;
+import com.example.demo.user.api.request.MenuUpdateDTO;
 import com.example.demo.user.biz.service.ShiroService;
 import com.example.demo.user.biz.service.SysMenuService;
 import org.apache.commons.lang.StringUtils;
+import org.bouncycastle.asn1.isismtt.ocsp.RequestedCertificate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,22 +96,25 @@ public class SysMenuController extends AbstractController {
      */
     @GetMapping("/info/{menuId}")
     @PreAuthorize("@ps.hasPermission('sys:menu:info')")
-    public AirResult info(@PathVariable("menuId") Long menuId) {
+    public AirResult<SysMenu> info(@PathVariable("menuId") Long menuId) {
         SysMenu sysMenu = sysMenuService.getById(menuId);
-        Map<String, Object> map = new HashMap<>();
-        map.put("menu", sysMenu);
-        return AirResult.success(map);
+        return AirResult.ok(sysMenu);
     }
 
 
     @SysLogAn("保存菜单")
     @PostMapping("/save")
     @PreAuthorize("@ps.hasPermission('sys:menu:save')")
-    public AirResult save(@RequestBody SysMenu menu) {
-        //数据校验
-        verifyForm(menu);
+    public AirResult save(RequestEntity<MenuAddDTO> requestEntity) {
 
-        sysMenuService.save(menu);
+        MenuAddDTO menuAddDTO = requestEntity.getBody();
+        //数据校验
+        verifyForm(menuAddDTO);
+
+        SysMenu sysMenu = new SysMenu();
+        BeanUtils.copyProperties(menuAddDTO, sysMenu);
+
+        sysMenuService.save(sysMenu);
 
         return AirResult.success();
     }
@@ -114,11 +122,16 @@ public class SysMenuController extends AbstractController {
     @SysLogAn("修改菜单")
     @PutMapping("/update")
     @PreAuthorize("@ps.hasPermission('sys:menu:update')")
-    public AirResult update(@RequestBody SysMenu menu) {
+    public AirResult update(RequestEntity<MenuUpdateDTO> requestEntity) {
 
-        verifyForm(menu);
+        MenuUpdateDTO menuUpdateDTO = requestEntity.getBody();
+        verifyForm(menuUpdateDTO);
 
-        sysMenuService.updateById(menu);
+        SysMenu sysMenu = new SysMenu();
+
+        BeanUtils.copyProperties(menuUpdateDTO, sysMenu);
+
+        sysMenuService.updateById(sysMenu);
 
         return AirResult.success();
 
@@ -143,6 +156,88 @@ public class SysMenuController extends AbstractController {
     }
 
     private void verifyForm(SysMenu menu) {
+        if (StringUtils.isBlank(menu.getName())) {
+            throw new RRException("菜单名称不能为空");
+        }
+
+        if (menu.getParentId() == null) {
+            throw new RRException("上级菜单不能为空");
+        }
+
+        //菜单
+        if (menu.getType() == Constant.MenuType.MENU.getValue()) {
+            if (StringUtils.isBlank(menu.getUrl())) {
+                throw new RRException("菜单URL不能为空");
+            }
+        }
+
+        //上级菜单类型
+        int parentType = Constant.MenuType.CATALOG.getValue();
+        if (menu.getParentId() != 0) {
+            SysMenu parentMenu = sysMenuService.getById(menu.getParentId());
+            parentType = parentMenu.getType();
+        }
+
+        //目录、菜单
+        if (menu.getType() == Constant.MenuType.CATALOG.getValue() ||
+                menu.getType() == Constant.MenuType.MENU.getValue()) {
+            if (parentType != Constant.MenuType.CATALOG.getValue()) {
+                throw new RRException("上级菜单只能为目录类型");
+            }
+            return;
+        }
+
+        //按钮
+        if (menu.getType() == Constant.MenuType.BUTTON.getValue()) {
+            if (parentType != Constant.MenuType.MENU.getValue()) {
+                throw new RRException("上级菜单只能为菜单类型");
+            }
+            return;
+        }
+    }
+
+    private void verifyForm(MenuAddDTO menu) {
+        if (StringUtils.isBlank(menu.getName())) {
+            throw new RRException("菜单名称不能为空");
+        }
+
+        if (menu.getParentId() == null) {
+            throw new RRException("上级菜单不能为空");
+        }
+
+        //菜单
+        if (menu.getType() == Constant.MenuType.MENU.getValue()) {
+            if (StringUtils.isBlank(menu.getUrl())) {
+                throw new RRException("菜单URL不能为空");
+            }
+        }
+
+        //上级菜单类型
+        int parentType = Constant.MenuType.CATALOG.getValue();
+        if (menu.getParentId() != 0) {
+            SysMenu parentMenu = sysMenuService.getById(menu.getParentId());
+            parentType = parentMenu.getType();
+        }
+
+        //目录、菜单
+        if (menu.getType() == Constant.MenuType.CATALOG.getValue() ||
+                menu.getType() == Constant.MenuType.MENU.getValue()) {
+            if (parentType != Constant.MenuType.CATALOG.getValue()) {
+                throw new RRException("上级菜单只能为目录类型");
+            }
+            return;
+        }
+
+        //按钮
+        if (menu.getType() == Constant.MenuType.BUTTON.getValue()) {
+            if (parentType != Constant.MenuType.MENU.getValue()) {
+                throw new RRException("上级菜单只能为菜单类型");
+            }
+            return;
+        }
+    }
+
+    private void verifyForm(MenuUpdateDTO menu) {
         if (StringUtils.isBlank(menu.getName())) {
             throw new RRException("菜单名称不能为空");
         }
