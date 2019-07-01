@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @Author oyg
@@ -21,20 +22,12 @@ public class Query<T> extends LinkedHashMap<String, Object> {
 
     public <K extends BasePageModel> IPage<T> getPage(K k, String defaultOrderField, boolean isAsc) {
         //分页参数
-        long curPage = 1;
-        long limit = 10;
+        long curPage = Optional.ofNullable(k.getPage()).orElse(1L);
 
-        if (k.getPage()!=null){
-            curPage = k.getPage();
-        }
-
-        if (k.getLimit() !=null){
-            limit = k.getLimit();
-        }
+        long limit = Optional.ofNullable(k.getLimit()).orElse(10L);
 
         //分页对象
         Page<T> page = new Page<>(curPage, limit);
-
 
         String orderField = SQLFilter.sqlInject(k.getOrderField());
 
