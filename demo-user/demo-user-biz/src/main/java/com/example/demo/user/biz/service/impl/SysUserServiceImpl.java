@@ -63,7 +63,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     }
 
     @Override
-    public PageUtils queryPage(UserQO userQO, Long createUserId) {
+    public PageUtils<SysUser> queryPage(UserQO userQO, Long createUserId) {
 
         IPage<SysUser> page = this.page(
                 new Query<SysUser>().getPage(userQO),
@@ -192,11 +192,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void updateUser(UserUpdateDTO userUpdateDTO) {
+    public void updateUser(UserUpdateDTO userUpdateDTO, Long updateUserId) {
 
         SysUser sysUser = new SysUser();
 
         BeanUtils.copyProperties(userUpdateDTO, sysUser);
+
+        sysUser.setUpdateUserId(updateUserId);
+        sysUser.setUpdateTime(new Date());
 
         this.updateById(sysUser);
 

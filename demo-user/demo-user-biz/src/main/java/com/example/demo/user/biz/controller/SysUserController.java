@@ -46,13 +46,13 @@ public class SysUserController extends AbstractController {
 
     @GetMapping("/list")
     @PreAuthorize("@ps.hasPermission('sys:user:list')")
-    public AirResult list(UserQO userQO) {
+    public AirResult<PageUtils<SysUser>> list(UserQO userQO) {
         //只有超级管理员可以查询所有管理员列表
         Long createUserId = null;
         if (getUserId() != Constant.SUPER_ADMIN) {
             createUserId = getUserId();
         }
-        PageUtils page = sysUserService.queryPage(userQO, createUserId);
+        PageUtils<SysUser> page = sysUserService.queryPage(userQO, createUserId);
 
         return AirResult.ok(page);
     }
@@ -142,10 +142,7 @@ public class SysUserController extends AbstractController {
 
         ValidatorUtils.validateEntity(userUpdateDTO, UpdateGroup.class);
 
-        userUpdateDTO.setUpdateUserId(getUserId());
-        userUpdateDTO.setUpdateTime(new Date());
-
-        sysUserService.updateUser(userUpdateDTO);
+        sysUserService.updateUser(userUpdateDTO, getUserId());
         return AirResult.success();
     }
 }

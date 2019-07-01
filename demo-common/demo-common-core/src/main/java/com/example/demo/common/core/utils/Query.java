@@ -13,8 +13,7 @@ import java.util.Optional;
  * @Author oyg
  * @Date 2018/8/5/17:10
  */
-public class Query<T> extends LinkedHashMap<String, Object> {
-
+public class Query<T> {
 
     public <K extends BasePageModel> IPage<T> getPage(K k){
         return this.getPage(k, null, false);

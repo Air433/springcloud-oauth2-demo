@@ -57,7 +57,7 @@ public class SysMenuController extends AbstractController {
      */
     @GetMapping("/list")
     @PreAuthorize("@ps.hasPermission('sys:menu:list')")
-    public List<SysMenu> list() {
+    public AirResult<List<SysMenu>> list() {
         List<SysMenu> menuList = sysMenuService.list(null);
         menuList.forEach(x -> {
             SysMenu parentMenu = sysMenuService.getById(x.getParentId());
@@ -65,7 +65,7 @@ public class SysMenuController extends AbstractController {
                 x.setParentName(parentMenu.getName());
             }
         });
-        return menuList;
+        return AirResult.ok(menuList);
     }
 
     /**
@@ -75,7 +75,7 @@ public class SysMenuController extends AbstractController {
      */
     @GetMapping("/select")
     @PreAuthorize("@ps.hasPermission('sys:menu:select')")
-    public AirResult select() {
+    public AirResult<List<SysMenu>> select() {
         List<SysMenu> menuList = sysMenuService.queryNotButtonList();
 
         SysMenu root = new SysMenu();

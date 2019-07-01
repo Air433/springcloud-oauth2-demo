@@ -37,7 +37,7 @@ public class SysRoleController extends AbstractController {
 
     @GetMapping("/list")
     @PreAuthorize("@ps.hasPermission('sys:role:list')")
-    public AirResult list(RoleQO roleQO) {
+    public AirResult<PageUtils<SysRole>> list(RoleQO roleQO) {
         //如果不是超级管理员，则只查询自己创建的角色列表
         Long createUserId = null;
         if (getUserId() != Constant.SUPER_ADMIN) {

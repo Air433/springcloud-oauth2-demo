@@ -43,7 +43,7 @@ public interface SysUserService extends IService<SysUser> {
 
     UserInfo getUserInfoBy(String username);
 
-    void updateUser(UserUpdateDTO userUpdateDTO);
+    void updateUser(UserUpdateDTO userUpdateDTO, Long updateUserId);
 
     SysUser getUserInfoById(Long userId);
 }
