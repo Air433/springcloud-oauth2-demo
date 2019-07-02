@@ -43,7 +43,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
     public PageUtils<SysRole> queryPage(RoleQO roleQO, Long createUserId) {
 
         IPage<SysRole> page = this.page(
-                new Query<SysRole>().getPage(roleQO),
+                Query.getPage(roleQO, SysRole.class),
                 new QueryWrapper<SysRole>()
                         .like(StringUtils.isNotBlank(roleQO.getRoleName()), "role_name", roleQO.getRoleName())
                         .eq(createUserId != null, "create_user_id", createUserId)

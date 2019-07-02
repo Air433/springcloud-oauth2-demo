@@ -97,7 +97,6 @@ public class SysUserController extends AbstractController {
         UserAddDTO userAddDTO = requestEntity.getBody();
         ValidatorUtils.validateEntity(userAddDTO, AddGroup.class);
 
-//        sysUser.setCreateUserId(getUserId());
         sysUserService.add(userAddDTO, getUserId());
         return AirResult.success();
     }

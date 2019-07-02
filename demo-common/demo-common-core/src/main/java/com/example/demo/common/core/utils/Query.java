@@ -13,13 +13,13 @@ import java.util.Optional;
  * @Author oyg
  * @Date 2018/8/5/17:10
  */
-public class Query<T> {
+public class Query {
 
-    public <K extends BasePageModel> IPage<T> getPage(K k){
-        return this.getPage(k, null, false);
+    public  static <T, K extends BasePageModel> IPage<T> getPage(K pageModel, Class<T> tClass){
+        return getPage(pageModel, null, false, tClass);
     }
 
-    public <K extends BasePageModel> IPage<T> getPage(K k, String defaultOrderField, boolean isAsc) {
+    public static <T, K extends BasePageModel> IPage<T> getPage(K k, String defaultOrderField, boolean isAsc, Class<T> tClass) {
         //分页参数
         long curPage = Optional.ofNullable(k.getPage()).orElse(1L);
 

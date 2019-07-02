@@ -66,7 +66,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     public PageUtils<SysUser> queryPage(UserQO userQO, Long createUserId) {
 
         IPage<SysUser> page = this.page(
-                new Query<SysUser>().getPage(userQO),
+                Query.getPage(userQO, SysUser.class),
                 new QueryWrapper<SysUser>()
                         .like(StringUtils.isNotBlank(userQO.getUsername()), "username", userQO.getUsername())
                         .eq(createUserId != null, "create_user_id", createUserId)

@@ -17,10 +17,7 @@ import org.springframework.http.RequestEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @Author oyg
@@ -201,9 +198,11 @@ public class SysMenuController extends AbstractController {
             throw new RRException("菜单名称不能为空");
         }
 
-        if (menu.getParentId() == null) {
-            throw new RRException("上级菜单不能为空");
-        }
+//        if (menu.getParentId() == null) {
+//            throw new RRException("上级菜单不能为空");
+//        }
+
+        Optional.ofNullable(menu.getParentId()).orElseThrow(()-> new RRException("上级菜单不能为空"));
 
         //菜单
         if (menu.getType() == Constant.MenuType.MENU.getValue()) {
