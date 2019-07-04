@@ -1,16 +1,17 @@
 # Spring Cloud Finchley Oauth2 权限认证服务示例 
  <p align="center">
-   <img src="https://img.shields.io/badge/Spring%20Cloud-Finchley.SR2-blue.svg" alt="Coverage Status">
-   <img src="https://img.shields.io/badge/Spring%20Boot-2.0.8.RELEASE-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR2-blue.svg" alt="Coverage Status">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.1.6.RELEASE-blue.svg" alt="Downloads">
    <img src="https://img.shields.io/badge/Mybatis%20Plus-3.0.7.1-blue.svg" alt="Downloads">
+   <img src="https://img.shields.io/badge/openJdk-11.0.3-blue.svg" alt="Downloads">
  </p>  
  
  #### 依赖版本 
  
  依赖 | 版本
  ---|---
- Spring Boot |  2.0.8.RELEASE  
- Spring Cloud | Finchley.SR2   
+ Spring Boot |  2.1.6.RELEASE  
+ Spring Cloud | Greenwich.SR2  
  Spring Security OAuth2 | 2.0.1.RELEASE
  Spring Security | 5.0.11.RELEASE
  Mybatis Plus | 3.0.7.1
