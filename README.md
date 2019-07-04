@@ -12,8 +12,8 @@
  ---|---
  Spring Boot |  2.1.6.RELEASE  
  Spring Cloud | Greenwich.SR2  
- Spring Security OAuth2 | 2.0.1.RELEASE
- Spring Security | 5.0.11.RELEASE
+ Spring Security OAuth2 | 2.3.4.RELEASE
+ Spring Security | 5.1.5.RELEASE
  Mybatis Plus | 3.0.7.1
  
  #### 模块说明
