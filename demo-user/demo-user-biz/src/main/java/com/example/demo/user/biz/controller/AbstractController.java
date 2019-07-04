@@ -19,7 +19,7 @@ import java.io.StringWriter;
  */
 public abstract class AbstractController {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected SecurityUser getUser() {
         SecurityUser securityUser = (SecurityUser) (SecurityContextHolder.getContext()
@@ -35,13 +35,16 @@ public abstract class AbstractController {
     @ExceptionHandler
     public AirResult exp(HttpServletRequest request, Exception ex){
 
+        logger.error("", ex);
+        logger.error("", ex.getMessage());
+
         if (ex instanceof RRException){
             return AirResult.build(((RRException) ex).getCode(), ((RRException) ex).getMsg());
         }
 
-        StringWriter sw = new StringWriter();
-        ex.printStackTrace(new PrintWriter(sw, true));
-        logger.error(sw.toString());
+//        StringWriter sw = new StringWriter();
+//        ex.printStackTrace(new PrintWriter(sw, true));
+//        logger.error(sw.toString());
 
         return AirResult.error(ex.getMessage());
     }
