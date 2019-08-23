@@ -1,4 +1,4 @@
-# Spring Cloud Finchley Oauth2 权限认证服务示例 
+# Spring Cloud Greenwich Oauth2 权限认证服务示例 
  <p align="center">
    <img src="https://img.shields.io/badge/Spring%20Cloud-Greenwich.SR2-blue.svg" alt="Coverage Status">
    <img src="https://img.shields.io/badge/Spring%20Boot-2.1.6.RELEASE-blue.svg" alt="Downloads">
